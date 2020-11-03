@@ -1,0 +1,41 @@
+package logic;
+
+import java.util.Scanner;
+
+public class Menu {
+
+    public Menu() {
+        mainMenu();
+    }
+
+
+    void mainMenu() {
+        int choose;
+        do {
+            System.out.println("1. Nowy raport");
+            System.out.println("2. Zapisane raporty");
+            System.out.println("3. Informacje o programie");
+            System.out.println("4. Wyjście");
+            Scanner scanner = new Scanner(System.in);
+            System.out.println("Wybierz: ");
+            choose = scanner.nextInt();
+            switch (choose) {
+                case 1:
+                    Report repot = new Report();
+                    break;
+                case 2:
+                    System.out.println("Zapisane raporty");
+                    break;
+                case 3:
+                    System.out.println("Program do księgowania");
+                    break;
+                case 4:
+                    System.out.println("Koniec pracy");
+                    break;
+                default:
+                    System.out.println("Wybierz poprawną opcje");
+                    break;
+            }
+        } while (choose != 4 );
+    }
+}

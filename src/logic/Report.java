@@ -3,75 +3,48 @@ package logic;
 
 import java.util.Scanner;
 
-class Report {
+public class Report {
 
-    private static final int MAX_TRANSACTION = 999;
-    private Transaction[] transaction = new Transaction[MAX_TRANSACTION];
-    private static final double EURO_EXCHANGE = 4,17;
-    private static final double USD_EXCHANGE = 3,97;
-
-    private int positionNumber = 1;
-    private int transactionNumber = 0;
-    private String reportName;
-
-    Scanner scanner = new Scanner(System.in);
-
+    private Scanner sc = new Scanner(System.in);
+     int numberReport = 1;
+     int transactionNumber = 0;
+    Transaction[] transactions = new Transaction[10000];
 
     public Report() {
-        newReport();
-        }
-
-        public void newReport(){
-
-        setReportName();
-        System.out.println("Wprowadź swoje transakcje.");
-        createReport();
     }
 
-    void createReport(){
-
-        boolean add = true;
-
+    void newReport() {
+        System.out.println("Raport " + numberReport);
+        boolean end = true;
+        boolean end1 = true;
         do {
-            System.out.println("Transakcja nr " + positionNumber);
-            transaction[transactionNumber] = new Transaction();
+            DataReader dataReader = new DataReader();
+            transactions[transactionNumber] = dataReader.readAndCreatePosition();
             transactionNumber++;
-            positionNumber++;
-            System.out.println("1 - Zakończ raport");
-            System.out.println("2 - Dodaj kolejną pozycje");
-            int nextPosition = scanner.nextInt();
-            scanner.nextLine();
-            if(nextPosition == 1) add = false;
-        }while (add);
-
-        System.out.println("Raport " + getReportName());
-
-        for (int i = 0; i < transactionNumber; i++) {
-            System.out.println(transaction[i]);
-            System.out.println();
-        }
-
-//        File file = new File(getReportName());
-//        boolean fileExists = file.exists();
-//        if (!fileExists) {
-//            try {
-//                fileExists = file.createNewFile();
-//            } catch (IOException e) {
-//                System.out.println("Nie udało się utworzyć pliku");
-//            }
-//        }
+//            String yesNo;
+//           do {
+//               System.out.println("Dodać kolejną transakcje?");
+//               System.out.println("1 - TAK || 2 - NIE");
+//               yesNo = sc.next();
+//               if (yesNo == "2") {
+//                   end = false;
+//                   end1 = false;
+//               }
+//               else if (yesNo != "1") System.out.println("Podaj poprawną opcje");
 //
-//        if (fileExists)
-//            System.out.println("Plik " + getReportName() + " istnieje lub został utworzony");
+//           }while (!end1);
+//
+//        } while (end);
+
+//            problem z zaimplementowaniem warunku czy dodac kolejna transakcje
+        numberReport++;
     }
 
-    public String getReportName() {
-        return reportName;
-    }
-
-    public void setReportName() {
-        System.out.println("Wprowadź nazwę raportu: ");
-        reportName = scanner.next();
+    private void printOptions() {
+        System.out.println("Wybierz opcję: ");
+        for (OptionYesNo optionYesNo : OptionYesNo.values()) {
+            System.out.println(optionYesNo);
+        }
     }
 }
 

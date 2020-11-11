@@ -1,8 +1,12 @@
 package logic;
 
+import java.rmi.server.RemoteObjectInvocationHandler;
 import java.util.Scanner;
 
 public class Menu {
+
+    private DataReader dataReader = new DataReader();
+    private Report Report = new Report();
 
     public Menu() {
         mainMenu();
@@ -10,32 +14,42 @@ public class Menu {
 
 
     void mainMenu() {
-        int choose;
+        Option option;
         do {
-            System.out.println("1. Nowy raport");
-            System.out.println("2. Zapisane raporty");
-            System.out.println("3. Informacje o programie");
-            System.out.println("4. Wyjście");
-            Scanner scanner = new Scanner(System.in);
-            System.out.println("Wybierz: ");
-            choose = scanner.nextInt();
-            switch (choose) {
-                case 1:
-                    Report repot = new Report();
+            printOptions();
+            option = Option.createFromInt(dataReader.getInt());
+
+            switch (option) {
+                case NEW_REPORT:
+                    createReport();
                     break;
-                case 2:
+                case SAFED_REPORTS:
                     System.out.println("Zapisane raporty");
                     break;
-                case 3:
+                case INFO:
                     System.out.println("Program do księgowania");
                     break;
-                case 4:
+                case EXIT:
                     System.out.println("Koniec pracy");
                     break;
                 default:
                     System.out.println("Wybierz poprawną opcje");
                     break;
             }
-        } while (choose != 4 );
+        } while (option != Option.EXIT);
     }
+
+    void createReport(){
+            Report report = new Report();
+            report.newReport();
+            System.out.println();
+
+    }
+    private void printOptions() {
+        System.out.println("Wybierz opcję: ");
+        for (Option option : Option.values()) {
+            System.out.println(option);
+        }
+    }
+
 }
